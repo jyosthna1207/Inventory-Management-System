@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Suppliers | J's Inventory</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+
+            <div>
+                <h2>J's Inventory</h2>
+                <p>Stock Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="suppliers.html" class="active">Suppliers</a>
+            <a href="purchases.html">Purchases</a>
+            <a href="sales.html">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Inventory Management System</p>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP HEADER -->
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">INVENTORY / SUPPLIERS</p>
+
+                <h1>Supplier Management</h1>
+
+                <p class="page-subtitle">
+                    Manage supplier details and contact information.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- SUPPLIER BANNER -->
+        <section class="form-banner">
+
+            <div class="banner-content">
+
+                <p class="eyebrow">SUPPLIER NETWORK</p>
+
+                <h2>Build Strong Supplier Relationships</h2>
+
+                <p>
+                    Maintain supplier information in one organized place
+                    for better inventory management and business operations.
+                </p>
+
+            </div>
+
+            <img
+                src="https://fulfilmentcenter.nl/cdn/shop/files/warehouse.png?v=1763996044&width=1500"
+                alt="Modern warehouse with organized supplier inventory"
+                class="supplier-banner-image">
+
+        </section>
+
+
+        <!-- SUPPLIER SUMMARY -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🏢</div>
+
+                <h3>Total Registered Suppliers</h3>
+
+                <strong id="totalSuppliers">0</strong>
+
+                <p>Suppliers in your database</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADD SUPPLIER FORM -->
+        <section class="content-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2 id="formTitle">Add New Supplier</h2>
+
+                    <p>
+                        Enter the supplier's contact information.
+                    </p>
+                </div>
+
+            </div>
+
+            <div id="supplierMessage" class="notice"></div>
+
+            <form id="supplierForm">
+
+                <input type="hidden" id="supplierId">
+
+                <div class="form-grid">
+
+                    <!-- SUPPLIER NAME -->
+                    <div class="form-group">
+
+                        <label for="supplierName">Supplier Name</label>
+
+                        <input
+                            type="text"
+                            id="supplierName"
+                            maxlength="150"
+                            placeholder="Enter supplier name"
+                            required>
+
+                    </div>
+
+
+                    <!-- CONTACT PERSON -->
+                    <div class="form-group">
+
+                        <label for="contactPerson">Contact Person</label>
+
+                        <input
+                            type="text"
+                            id="contactPerson"
+                            maxlength="100"
+                            placeholder="Enter contact person">
+
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="form-group">
+
+                        <label for="phone">Phone Number</label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            maxlength="20"
+                            placeholder="Enter phone number">
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            maxlength="120"
+                            placeholder="Enter email address">
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+                    <div class="form-group">
+
+                        <label for="address">Address</label>
+
+                        <input
+                            type="text"
+                            id="address"
+                            maxlength="255"
+                            placeholder="Enter supplier address">
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM BUTTONS -->
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        id="cancelEdit"
+                        style="display:none;">
+
+                        Cancel Edit
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn"
+                        id="saveSupplier">
+
+                        Add Supplier
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ALL SUPPLIERS TABLE -->
+        <section class="content-card" style="margin-top:25px;">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>All Suppliers</h2>
+
+                    <p>
+                        View and manage your registered suppliers.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn"
+                    id="exportSuppliersBtn">
+
+                    Export CSV
+
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH SUPPLIERS -->
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="supplierSearch"
+                    placeholder="Search suppliers by name, phone, email...">
+
+            </div>
+
+
+            <!-- SUPPLIER TABLE -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Supplier Name</th>
+                            <th>Contact Person</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="supplierRows">
+
+                        <tr>
+                            <td colspan="7" style="text-align:center;">
+                                Loading suppliers...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+
+            <p>© 2026 J's Inventory Management System</p>
+
+            <p>Manage Smart. Manage Stock.</p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT FILES -->
+<script src="js/app.js"></script>
+<script src="js/suppliers.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchases | J's Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+            <div>
+                <h2>J's Inventory</h2>
+                <p>Stock Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="suppliers.html">Suppliers</a>
+            <a href="purchases.html" class="active">Purchases</a>
+            <a href="sales.html">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            Inventory Management System
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="page-header">
+            <div>
+                <h1>Purchase Management</h1>
+                <p>Record purchases and manage incoming stock.</p>
+            </div>
+        </header>
+
+        <!-- BANNER -->
+        <section class="page-banner">
+            <div class="banner-content">
+                <h2>Manage Your Purchases</h2>
+                <p>
+                    Record products received from suppliers.
+                    Every purchase automatically increases your stock.
+                </p>
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=85"
+                alt="Warehouse receiving and storing inventory packages"
+                class="banner-image">
+        </section>
+
+        <!-- SUMMARY -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <h3>Total Purchases</h3>
+                <h2 id="totalPurchases">0</h2>
+                <p>Purchase transactions</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Units Purchased</h3>
+                <h2 id="purchaseUnits">0</h2>
+                <p>Total quantity received</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Purchase Value</h3>
+                <h2 id="purchaseValue">₹0.00</h2>
+                <p>Total purchase amount</p>
+            </div>
+
+        </section>
+
+        <!-- PURCHASE FORM -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2 id="purchaseFormTitle">Record New Purchase</h2>
+                    <p>Enter the details of the incoming stock.</p>
+                </div>
+            </div>
+
+            <form id="purchaseForm">
+
+                <input type="hidden" id="purchaseId">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="purchaseProduct">Select Product</label>
+                        <select id="purchaseProduct" required>
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchaseSupplier">Select Supplier</label>
+                        <select id="purchaseSupplier" required>
+                            <option value="">Select Supplier</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchaseQuantity">Quantity</label>
+                        <input
+                            type="number"
+                            id="purchaseQuantity"
+                            min="1"
+                            placeholder="Enter quantity"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchasePrice">Purchase Price (₹)</label>
+                        <input
+                            type="number"
+                            id="purchasePrice"
+                            min="0"
+                            step="1"
+                            placeholder="Enter purchase price"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchaseDate">Purchase Date</label>
+                        <input type="date" id="purchaseDate" required>
+                    </div>
+
+                </div>
+
+                <div id="purchaseMessage" class="message"></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary" id="savePurchase">
+                        Save Purchase
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="cancelPurchaseEdit"
+                        style="display:none;">
+                        Cancel Edit
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- PURCHASE HISTORY -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Purchase History</h2>
+                    <p>View and manage all purchase transactions.</p>
+                </div>
+
+                <input
+                    type="search"
+                    id="purchaseSearch"
+                    placeholder="Search purchases...">
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+                        <tr>
+                            <th>Purchase ID</th>
+                            <th>Product</th>
+                            <th>Supplier</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="purchaseRows">
+                        <tr>
+                            <td colspan="8">Loading purchases...</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <footer class="page-footer">
+            © 2026 J's Inventory | Inventory Management System
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/purchases.js"></script>
+
+</body>
+</html>

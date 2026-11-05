@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | J's Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+            <div>
+                <h2>J's Inventory</h2>
+                <p>Stock Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="add-product.html" class="active">Add Product</a>
+            <a href="suppliers.html">Suppliers</a>
+            <a href="purchases.html">Purchases</a>
+            <a href="sales.html">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Inventory Management System</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">INVENTORY / PRODUCTS</p>
+                <h1>Add New Product</h1>
+                <p class="page-subtitle">
+                    Enter product information to add it to your inventory.
+                </p>
+            </div>
+        </header>
+
+        <section class="form-banner">
+            <div>
+                <p class="eyebrow">PRODUCT MANAGEMENT</p>
+                <h2>Grow your inventory</h2>
+                <p>
+                    Keep product details and stock quantities organized
+                    in one place.
+                </p>
+            </div>
+
+            <img
+                src="https://cdn.prod.website-files.com/60dece8aa1eb0f7ab7b3947a/693a90badc6c16cce16fe7b4_8.%20Inventory%20Man..webp"
+                alt="Warehouse inventory shelves with organized products">
+        </section>
+
+        <section class="content-card product-form-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Product Details</h2>
+                    <p>All fields are required.</p>
+                </div>
+            </div>
+
+            <div id="addMessage" class="notice"></div>
+
+            <form id="addProductForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input
+                            type="text"
+                            id="productName"
+                            placeholder="Enter product name"
+                            maxlength="150"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="">Select category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Food">Food</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price (₹)</label>
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="Enter price"
+                            min="0"
+                            step="0.01"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Initial Quantity</label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            placeholder="Enter available quantity"
+                            min="0"
+                            step="1"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reorderLevel">Reorder Level</label>
+                        <input
+                            type="number"
+                            id="reorderLevel"
+                            placeholder="Enter minimum stock level"
+                            min="0"
+                            step="1"
+                            value="5"
+                            required>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-light">
+                        Clear Form
+                    </button>
+
+                    <button type="submit" class="btn">
+                        Add Product
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    const addProductForm = document.getElementById("addProductForm");
+
+    addProductForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const productData = {
+            product_name: document.getElementById("productName").value.trim(),
+            category: document.getElementById("category").value,
+            price: Number(document.getElementById("price").value),
+            quantity: Number(document.getElementById("quantity").value),
+            reorder_level: Number(document.getElementById("reorderLevel").value)
+        };
+
+        try {
+            await api("/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(productData)
+            });
+
+            showMessage("addMessage", "Product added successfully!");
+
+            addProductForm.reset();
+
+            document.getElementById("reorderLevel").value = 5;
+
+        } catch (error) {
+            showMessage("addMessage", error.message, "error");
+        }
+    });
+</script>
+
+</body>
+</html>
+

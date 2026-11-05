@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | J's Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+            <div>
+                <h2>J's Inventory</h2>
+                <p>MANAGEMENT PORTAL</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="suppliers.html">Suppliers</a>
+            <a href="purchases.html">Purchases</a>
+            <a href="sales.html">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>J's Inventory Management</p>
+            <p>Version 1.0.0</p>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">OVERVIEW / DASHBOARD</p>
+                <h1>Dashboard</h1>
+                <p class="page-subtitle">
+                    Welcome back! Here's what's happening with your inventory.
+                </p>
+            </div>
+
+            <a href="add-product.html" class="btn">
+                + Add New Product
+            </a>
+        </header>
+
+        <!-- WELCOME BANNER -->
+        <section class="hero">
+            <div>
+                <p class="eyebrow">INVENTORY CONTROL CENTER</p>
+
+                <h2>Manage smarter.<br>Grow faster.</h2>
+
+                <p>
+                    Keep track of your products, stock levels and suppliers
+                    with your centralized inventory workspace.
+                </p>
+
+                <a href="products.html" class="btn"
+                   style="margin-top:20px;">
+                    Explore Inventory →
+                </a>
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=1200&q=90"
+                alt="Products packed and prepared for inventory management">
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <h3>Total Products</h3>
+                <h2 id="totalProducts">0</h2>
+                <p>Registered products</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <h3>Total Stock Units</h3>
+                <h2 id="totalStock">0</h2>
+                <p>Units available</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">₹</div>
+                <h3>Inventory Value</h3>
+                <h2 id="inventoryValue">₹0</h2>
+                <p>Current stock valuation</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <h3>Low Stock Items</h3>
+                <h2 id="lowStock">0</h2>
+                <p>Require attention</p>
+            </div>
+
+        </section>
+
+        <!-- QUICK ACTIONS -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Access your most-used inventory operations.</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+
+                <a href="add-product.html" class="quick-action">
+                    <span>＋</span>
+                    <div>
+                        <h3>Add Product</h3>
+                        <p>Register a new product</p>
+                    </div>
+                </a>
+
+                <a href="products.html" class="quick-action">
+                    <span>▤</span>
+                    <div>
+                        <h3>Manage Stock</h3>
+                        <p>Update purchase and sales</p>
+                    </div>
+                </a>
+
+                <a href="suppliers.html" class="quick-action">
+                    <span>♧</span>
+                    <div>
+                        <h3>Manage Suppliers</h3>
+                        <p>Maintain supplier records</p>
+                    </div>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- RECENT PRODUCTS -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Recently Added Products</h2>
+                    <p>Latest products registered in your inventory.</p>
+                </div>
+
+                <a href="products.html" class="view-link">
+                    View All →
+                </a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="recentRows">
+                        <tr>
+                            <td colspan="6">Loading products...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- LOW STOCK -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Stock Attention</h2>
+                    <p>Products that have reached their reorder level.</p>
+                </div>
+            </div>
+
+            <div id="lowStockList" class="low-stock-list">
+                <p>Checking stock levels...</p>
+            </div>
+
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>© 2026 J's Inventory Management System</p>
+            <p>Designed for smarter stock management.</p>
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="js/app.js"></script>
+
+<script>
+async function loadDashboard() {
+
+    try {
+
+        const dashboard = await api("/dashboard");
+        const products = await api("/products");
+
+        document.getElementById("totalProducts").textContent =
+            dashboard.totalProducts ?? 0;
+
+        document.getElementById("totalStock").textContent =
+            Number(dashboard.totalStock ?? 0).toLocaleString("en-IN");
+
+        document.getElementById("inventoryValue").textContent =
+            money(dashboard.inventoryValue ?? 0);
+
+        document.getElementById("lowStock").textContent =
+            dashboard.lowStock ?? 0;
+
+        // Recently added products
+        const recentProducts = [...products]
+            .sort((a, b) => Number(b.product_id) - Number(a.product_id))
+            .slice(0, 5);
+
+        const recentRows = document.getElementById("recentRows");
+
+        if (recentProducts.length === 0) {
+
+            recentRows.innerHTML = `
+                <tr>
+                    <td colspan="6">No products available.</td>
+                </tr>`;
+
+        } else {
+
+            recentRows.innerHTML = recentProducts.map(product => {
+
+                const low = Number(product.quantity) <=
+                            Number(product.reorder_level);
+
+                return `
+                    <tr>
+                        <td>#${product.product_id}</td>
+                        <td><strong>${escapeText(product.product_name)}</strong></td>
+                        <td>${escapeText(product.category)}</td>
+                        <td>${money(product.price)}</td>
+                        <td>${product.quantity}</td>
+                        <td>
+                            <span class="status ${low ? "low" : "good"}">
+                                ${low ? "Low Stock" : "In Stock"}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+
+            }).join("");
+        }
+
+        // Low stock products
+        const lowProducts = products.filter(product =>
+            Number(product.quantity) <= Number(product.reorder_level)
+        );
+
+        const lowStockList = document.getElementById("lowStockList");
+
+        if (lowProducts.length === 0) {
+
+            lowStockList.innerHTML = `
+                <div class="stock-empty">
+                    <span>✓</span>
+                    <div>
+                        <h3>All stock levels look good!</h3>
+                        <p>No products currently require reordering.</p>
+                    </div>
+                </div>`;
+
+        } else {
+
+            lowStockList.innerHTML = lowProducts.map(product => `
+                <div class="low-stock-item">
+                    <div>
+                        <h3>${escapeText(product.product_name)}</h3>
+                        <p>${escapeText(product.category)}</p>
+                    </div>
+
+                    <div class="stock-quantity">
+                        <strong>${product.quantity}</strong>
+                        <span>Reorder at ${product.reorder_level}</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+    } catch (error) {
+
+        console.error("Dashboard error:", error);
+
+        document.getElementById("recentRows").innerHTML = `
+            <tr>
+                <td colspan="6">Unable to load dashboard data.</td>
+            </tr>`;
+
+    }
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales | J's Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+
+            <div>
+                <h2>J's Inventory</h2>
+                <p>Stock Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="suppliers.html">Suppliers</a>
+            <a href="purchases.html">Purchases</a>
+            <a href="sales.html" class="active">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            Inventory Management System
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- PAGE HEADER -->
+        <header class="page-header">
+            <div>
+                <h1>Sales Management</h1>
+                <p>Record sales and monitor outgoing stock.</p>
+            </div>
+        </header>
+
+
+        <!-- BANNER -->
+        <section class="page-banner">
+
+            <div class="banner-content">
+                <h2>Manage Your Sales</h2>
+
+                <p>
+                    Record product sales, maintain customer details
+                    and automatically update available stock.
+                </p>
+            </div>
+
+            <img
+    src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&q=85"
+    alt="Online retail sales and shopping"
+    class="banner-image">
+
+        </section>
+
+
+        <!-- SUMMARY CARDS -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <h3>Total Sales</h3>
+                <h2 id="totalSales">0</h2>
+                <p>Sales transactions</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Units Sold</h3>
+                <h2 id="salesUnits">0</h2>
+                <p>Total products sold</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Revenue</h3>
+                <h2 id="salesRevenue">₹0.00</h2>
+                <p>Total sales amount</p>
+            </div>
+
+        </section>
+
+
+        <!-- SALES FORM -->
+        <section class="content-card">
+
+            <div class="section-heading">
+                <div>
+                    <h2 id="salesFormTitle">Record New Sale</h2>
+                    <p>Enter the customer and product sale details.</p>
+                </div>
+            </div>
+
+            <form id="salesForm">
+
+                <input type="hidden" id="saleId">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="saleProduct">Select Product</label>
+
+                        <select id="saleProduct" required>
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter customer name"
+                            maxlength="150"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="saleQuantity">Quantity</label>
+
+                        <input
+                            type="number"
+                            id="saleQuantity"
+                            min="1"
+                            placeholder="Enter quantity"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="sellingPrice">Selling Price (₹)</label>
+
+                        <input
+                            type="number"
+                            id="sellingPrice"
+                            min="0"
+                            step="1"
+                            placeholder="Enter selling price"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="saleDate">Sale Date</label>
+
+                        <input
+                            type="date"
+                            id="saleDate"
+                            required>
+                    </div>
+
+                </div>
+
+
+                <div id="salesMessage" class="message"></div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                        id="saveSale">
+                        Save Sale
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="cancelSaleEdit"
+                        style="display:none;">
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- SALES HISTORY -->
+        <section class="content-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Sales History</h2>
+                    <p>View and manage all recorded sales.</p>
+                </div>
+
+                <input
+                    type="search"
+                    id="salesSearch"
+                    placeholder="Search sales...">
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+                        <tr>
+                            <th>Sale ID</th>
+                            <th>Product</th>
+                            <th>Customer</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="salesRows">
+
+                        <tr>
+                            <td colspan="8">Loading sales...</td>
+                        </tr>
+
+                    </tbody>
+
+               
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="page-footer">
+            © 2026 J's Inventory | Inventory Management System
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="js/app.js"></script>
+<script src="js/sales.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products | J's Inventory</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">J's</div>
+
+            <div>
+                <h2>J's Inventory</h2>
+                <p>Stock Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html">Dashboard</a>
+            <a href="products.html" class="active">Products</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="suppliers.html">Suppliers</a>
+            <a href="purchases.html">Purchases</a>
+            <a href="sales.html">Sales</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Inventory Management System</p>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">INVENTORY / PRODUCTS</p>
+
+                <h1>Product Management</h1>
+
+                <p class="page-subtitle">
+                    Monitor products, manage stock and maintain inventory records.
+                </p>
+            </div>
+
+            <a href="add-product.html" class="btn">
+                + Add New Product
+            </a>
+
+        </header>
+
+        <!-- PRODUCT BANNER -->
+        <section class="form-banner">
+
+            <div class="banner-content">
+
+                <p class="eyebrow">INVENTORY CONTROL</p>
+
+                <h2>Manage Your Products Efficiently</h2>
+
+                <p>
+                    Keep track of product information, pricing and available
+                    stock in one organized inventory system.
+                </p>
+
+            </div>
+
+            <img
+                src="https://ultraglobal.express/uphaphee/2021/07/warehouse-storage-benefits-2_72950a00bc17dda4f85c445ee2ef68c3-ojn7nf8314oi9rdx8wgotch931lpbnyc5cuovx4r9c.jpg"
+                alt="Organized warehouse product inventory"
+                class="supplier-banner-image">
+
+        </section>
+
+        <!-- PRODUCT SUMMARY -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <h3>Total Products</h3>
+                <strong id="productCount">0</strong>
+                <p>Registered product types</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <h3>Total Stock Units</h3>
+                <strong id="stockCount">0</strong>
+                <p>Available inventory units</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <h3>Low Stock Products</h3>
+                <strong id="lowStockCount">0</strong>
+                <p>Products requiring attention</p>
+            </div>
+
+        </div>
+
+        <!-- PRODUCT TABLE -->
+        <section class="content-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>All Products</h2>
+
+                    <p>
+                        View, search and manage your inventory products.
+                    </p>
+                </div>
+
+                <a href="add-product.html" class="btn">
+                    + Add Product
+                </a>
+
+            </div>
+
+            <!-- SEARCH -->
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by product name, category or ID...">
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Reorder Level</th>
+                            <th>Stock Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="productRows">
+
+                        <tr>
+                            <td colspan="8" style="text-align:center;">
+                                Loading products...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- EDIT PRODUCT MODAL -->
+        <div class="modal" id="editModal">
+
+            <div class="modal-content">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Edit Product</h2>
+                        <p>Update product information.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        onclick="closeEditModal()">
+                        ✕
+                    </button>
+
+                </div>
+
+                <div id="editMessage" class="notice"></div>
+
+                <form id="editForm">
+
+                    <input type="hidden" id="editId">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="editName">Product Name</label>
+                            <input type="text" id="editName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editCategory">Category</label>
+                            <input type="text" id="editCategory" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPrice">Price</label>
+                            <input
+                                type="number"
+                                id="editPrice"
+                                min="0"
+                                step="0.01"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editQuantity">Quantity</label>
+                            <input
+                                type="number"
+                                id="editQuantity"
+                                min="0"
+                                step="1"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editReorder">Reorder Level</label>
+                            <input
+                                type="number"
+                                id="editReorder"
+                                min="0"
+                                step="1"
+                                required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-light"
+                            onclick="closeEditModal()">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="btn">
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- STOCK UPDATE MODAL -->
+        <div class="modal" id="stockModal">
+
+            <div class="modal-content">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Update Stock</h2>
+                        <p>Record a purchase or sale.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        onclick="closeStockModal()">
+                        ✕
+                    </button>
+
+                </div>
+
+                <div id="stockMessage" class="notice"></div>
+
+                <form id="stockForm">
+
+                    <input type="hidden" id="stockId">
+
+                    <div class="form-group">
+
+                        <label for="stockType">Transaction Type</label>
+
+                        <select id="stockType" required>
+
+                            <option value="purchase">
+                                Stock In (Purchase)
+                            </option>
+
+                            <option value="sale">
+                                Stock Out (Sale)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="stockAmount">Quantity</label>
+
+                        <input
+                            type="number"
+                            id="stockAmount"
+                            min="1"
+                            step="1"
+                            placeholder="Enter quantity"
+                            required>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-light"
+                            onclick="closeStockModal()">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="btn">
+                            Update Stock
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+
+            <p>© 2026 J's Inventory Management System</p>
+
+            <p>Manage Smart. Manage Stock.</p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script src="js/app.js"></script>
+<script src="js/products.js"></script>
+
+</body>
+</html>
